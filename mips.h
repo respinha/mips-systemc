@@ -31,6 +31,8 @@
 #include "reg_exe_mem.h"
 #include "reg_mem_wb.h"
 
+
+#include "mux4.h"
 /**
  * MIPS module.
  * MIPS module is the main module of the MIPS simulator.
@@ -143,7 +145,7 @@ SC_MODULE(mips) {
    sc_signal <bool> MemRead_exe, MemWrite_exe, MemtoReg_exe;
    sc_signal <bool> RegWrite_exe;
    sc_signal <bool> ALUSrc_exe;
-   sc_signal < sc_uint<3> > ALUOp_exe;
+   sc_signal <sc_uint<3> > ALUOp_exe;
    sc_signal <bool> Branch_exe;
    
    // the following two signals are not used by the architecture
