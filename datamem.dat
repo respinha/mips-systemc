@@ -1,0 +1,15 @@
+0x4          # int increment
+0x38         # after last element address
+0x10         # first element address
+0x1          # constant used in branch
+0x001000     # array at 0x10
+0x001001     
+0x001002     
+0x001003     
+0x001004     
+0x001005     
+0x001006     
+0x001007     
+0x001008     
+0x001009     # end array at 0x34
+0x000000     # store result here

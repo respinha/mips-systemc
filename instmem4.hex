@@ -1,0 +1,13 @@
+0x00002020 #       add r4,r0,r0    
+0x8c010000 #       lw  r1,0(r0)    
+0x8c050004 #       lw  r5,4(r0)    
+0x8c030008 #       lw  r3,8(r0)    
+0x8c07000c #       lw  r7,c(r0)    
+0x8c620000 # lab1: lw  r2,0(r3)      
+0x00442020 #       add r4,r4,r2
+0x00611820 #       add r3,r3,r1
+0x0065302a #       slt r6,r3,r5
+0x10c7fffb #       beq r6,r7,lab1        
+0xac640000 #       sw  r4,0(r3)       
+0x00002020 #       add r4,r0,r0    
+0x00001820 #       add r3,r0,r0    

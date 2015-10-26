@@ -1,0 +1,75 @@
+***************************************************************************
+*  MIPS_SystemC                                                           *
+*  MIPS Model in SystemC with a Graphical User Interface                  *
+*  Arquitectura de Computadores Avançada                                  * 
+*  Universidade de Aveiro - 2014                                          *
+***************************************************************************
+
+### Information
+
+   MIPS_SystemC builds a SystemC model of the MIPS architecture. 
+   The architecture is similar to the one described in Henessy&Patterson92. 
+   It includes a graphical user interface that uses Qt libraries.
+
+### Version Info
+
+    MIPS_SystemC v0.6.6 (Beta Release) - September 12, 2014
+
+### Contents
+
+    README                    This README File
+    MIPS_SystemC              precompiled simulator using shared libs
+    *.cpp *.h                 SystemC MIPS model
+    GUI/*.cpp GUI/*.h         User Interface source files
+    refman.pdf                Documentation
+
+### Operating System and Compiler
+
+    The binaries were compiled with gcc/g++ - Gnu Project C/C++ Compiler
+    (gcc version 4.6.3) using the Qt libraries (release 4.8) on 
+    Ubuntu 12.04 and Ubuntu 14.04.
+	
+    It is required to have the Qt libraries release 4.8 (or later) 
+    installed in the system prior to compilation. 
+
+    It is required to have the SystemC release 2.2.0 
+    installed in the system prior to compilation.
+
+    More information on Qt can be found at http://qt-project.org/
+    More information on SystemC can be found at 
+    http://www.accellera.org/downloads/standards/systemc
+
+### Instructions 
+
+    1- Generate Makefile:
+
+         qmake MIPS_SystemC.pro
+	
+    2- define SYSTEMC:
+
+         for example:
+         export SYSTEMC=/usr/local/systemc-2.2
+
+    3- compile:
+
+         make
+
+    4- run 
+
+         ./MIPS_SystemC
+
+
+### References
+
+     Henessy&Patterson2011
+         Computer Organization and Design, David Patterson and John Henessy
+         Morgan Kaufmann, 2012011   
+
+     SystemC
+         http://www.accellera.org/downloads/standards/systemc
+
+     Qt
+         http://qt-project.org/
+
+Copyright (c) 2014  - Universidade de Aveiro
+

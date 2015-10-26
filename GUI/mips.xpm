@@ -1,0 +1,23 @@
+/* XPM */
+static const char * mips_xpm[] = {
+"12 16 4 1",
+" 	c #040404",
+".	c None",
+"X	c white",
+"O	c black",
+"............",
+".          .",
+". XXXXXXXX .",
+". XX  XXXX .",
+". XX   XXX .",
+". XXX   XX .",
+". XX   XXX .",
+". XX  XXXX .",
+". XXXXXXXX .",
+". XX    XX .",
+". XX XX XX .",
+". XX XX XX .",
+". XX    XX .",
+". XXXXXXXX .",
+".          .",
+"............"};
