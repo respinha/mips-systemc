@@ -103,13 +103,13 @@ SC_MODULE(mips) {
 
    //ID
    sc_signal < sc_uint<32> > inst_id,  // current instruction ID phase
-                             PC4_id;
+                             PC4_id1, PC4_id2;
    // instruction fields
    sc_signal < sc_uint<5> > rs, rt, rd;
    sc_signal < sc_uint<16> > imm;
-   sc_signal < sc__uint<6> > opcode;
+   sc_signal < sc_uint<6> > opcode, opcode_id2;
    sc_signal < sc_uint<5> > shamt;
-   sc_signal < sc_uint<6> > funct;
+   sc_signal < sc_uint<6> > funct, funct_id2;
    // register file signals
    sc_signal < sc_uint<5> > WriteReg;  // register to write
 
@@ -118,13 +118,13 @@ SC_MODULE(mips) {
 			     WriteVal; // value to write in register WriteReg
 
    sc_signal < sc_uint<32> > imm_ext;  // imm sign extended
-
+   sc_signal < sc_uint<16> > imm_id2;
    sc_signal < sc_uint<32> > rega_exe, // value of register rs EXE phase
-                              rega_id2,
-                              regb_id2,
+                        
                              regb_exe, // value of regiter rt EXE phase
                              regb_mem; // value of regiter rt MEM phase
 
+   sc_signal < sc_uint<5> > rega_id2, regb_id2;                    
    sc_signal <bool> reset_haz_idexe, reset_haz_ifid, reset_ifid, reset_haz_id1id2, reset_id1id2, reset_idexe, reset_haz_exmem, reset_exmem;
    // control signals
    sc_signal <bool> MemRead, MemWrite, MemtoReg;
@@ -141,6 +141,7 @@ SC_MODULE(mips) {
    //EXE
    sc_signal < bool > Zero;            // ALU output is zero
    sc_signal < sc_uint<32> > imm_exe, PC4_exe;
+
    sc_signal < sc_uint<32> > addr_ext; // imm_ext shift left 2
    sc_signal < sc_uint<5> > WriteReg_exe;
    // ALU signals
@@ -196,7 +197,8 @@ SC_MODULE(mips) {
    void buildArchitecture();
 
    void buildIF();
-   void buildID();
+   void buildID1();
+   void buildID2();
    void buildEXE();
    void buildMEM();
    void buildWB();
