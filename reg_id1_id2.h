@@ -22,10 +22,12 @@ SC_MODULE(reg_id1_id2) {
 	sc_in  < bool > clk;
 	sc_in  < bool > reset;
 	sc_in  < bool > enable;
-	sc_in  < sc_uint<5>  > opcode_id1, funct_id1;
-	sc_in  < sc_uint<32> > rega_id1, regb_id1, imm_id1, PC4_id1;
-	sc_out < sc_uint<32> > rega_id2, regb_id2, imm_id2, PC4_id2;
-	sc_out < sc_uint<32> > opcode_id2, funct_id2;
+	sc_in  < sc_uint<6>  > opcode_id1, funct_id1;
+	sc_in  < sc_uint<32> > rega_id1, regb_id1, PC4_id1;
+	sc_in  < sc_uint<16> > imm_id1;
+	sc_out < sc_uint<32> > rega_id2, regb_id2, PC4_id2;
+	sc_in  < sc_uint<32> > imm_id2,
+	sc_out < sc_uint<6> > opcode_id2, funct_id2;
 /*
 	sc_in  < sc_uint<32> > PC_id;   // only for visualization purposes
 	sc_out < sc_uint<32> > PC_exe;  // only for visualization purposes
