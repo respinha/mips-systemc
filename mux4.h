@@ -1,5 +1,5 @@
-#ifndef MUXMOD_H
-#define MUXMOD_H
+#ifndef MUX4MOD_H
+#define MUX4MOD_H
 
 /**
  *
@@ -31,14 +31,14 @@ public:
   sc_in< sc_uint<2> >  sel;        
   sc_out< T > dout;
 
-  SC_CTOR(mux)
+  SC_CTOR(mux4)
      {      
       SC_METHOD(entry);
       sensitive << din0 << din1 << din2 << din3 << sel;
     }
   
   void entry();
-};
+};  
 
 
 template <class T> void mux4<T>::entry()

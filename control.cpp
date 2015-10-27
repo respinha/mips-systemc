@@ -8,14 +8,17 @@ void control::entry()
 {
   switch(opcode.read()) {
     case 0: // R-format
-            RegDst.write(1);  
-            ALUSrc.write(0);
+        
+        RegDst.write(1);  
+        ALUSrc.write(0);
 	    MemtoReg.write(0);
 	    RegWrite.write(1);
 	    MemRead.write(0);
 	    MemWrite.write(0);
 	    Branch.write(0);
 	    switch(funct.read()) {
+	       case  3: // jump on regist	  
+
 	       case 32: ALUOp.write(2);
 	                break;
 	       case 34: ALUOp.write(6);
