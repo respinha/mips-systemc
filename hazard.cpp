@@ -16,6 +16,7 @@ void hazard::detect_hazard()
 		enable_pc.write(false);
 		enable_ifid.write(false);
 		reset_idexe.write(true);
+		reset_id1id2.write(false);
 		reset_ifid.write(false);
 		reset_exmem.write(false);
 	}
@@ -23,6 +24,7 @@ void hazard::detect_hazard()
 
 		enable_pc.write(true);	
 		enable_ifid.write(true);
+		reset_id1id2.write(true);
 		reset_idexe.write(true);
 		reset_ifid.write(true);
 		reset_exmem.write(true);
@@ -31,6 +33,7 @@ void hazard::detect_hazard()
 	        enable_pc.write(true);
 		enable_ifid.write(true);
 		reset_idexe.write(false);
+		reset_id1id2.write(false);
 		reset_ifid.write(false);
 		reset_exmem.write(false);
 	}
