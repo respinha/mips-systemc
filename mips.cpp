@@ -387,6 +387,7 @@ mips::~mips(void)
       delete or_reset_idexe;
       delete reg_if_id;
       delete reg_id_exe;
+      delete reg_id1_id2;
       delete reg_exe_mem;
       delete reg_mem_wb;
 }
