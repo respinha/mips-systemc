@@ -15,7 +15,7 @@
  * reg_id_exe_t module is the ID/EXE pipeline register. 
  */
 
-SC_MODULE(reg_id1_id2) {
+SC_MODULE(reg_id1_id2_t) {
 
 	// Ports
 	

@@ -30,7 +30,7 @@
 #include "reg_id_exe.h"
 #include "reg_exe_mem.h"
 #include "reg_mem_wb.h"
-
+#include "reg_id1_id2.h"
 
 #include "mux4.h"
 /**
@@ -53,7 +53,7 @@ SC_MODULE(mips) {
    sc_in < bool > reset;
 
    // Modules
-   // IF 
+   // IF
    registo           *PCreg;     // PC register
    imem              *instmem;   // instruction memory
    add *add4;                    // adds 4 to PC
@@ -67,6 +67,7 @@ SC_MODULE(mips) {
    mux< sc_uint<5> >  *mr;       // selects destination register
    ext *e1;                      // sign extends imm to 32 bits
    orgate *or_reset_idexe;
+   orgate *or_reset_id1id2;
    hazard *hazard_unit;
 
    //EXE
@@ -85,6 +86,7 @@ SC_MODULE(mips) {
    //pipeline registers
    reg_if_id_t       *reg_if_id;
    reg_id_exe_t      *reg_id_exe;
+   reg_id1_id2_t     *reg_id1_id2;
    reg_exe_mem_t     *reg_exe_mem;
    reg_mem_wb_t      *reg_mem_wb;
 
@@ -105,7 +107,7 @@ SC_MODULE(mips) {
    // instruction fields
    sc_signal < sc_uint<5> > rs, rt, rd;
    sc_signal < sc_uint<16> > imm;
-   sc_signal < sc_uint<6> > opcode;
+   sc_signal < sc__uint<6> > opcode;
    sc_signal < sc_uint<5> > shamt;
    sc_signal < sc_uint<6> > funct;
    // register file signals
@@ -118,10 +120,12 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<32> > imm_ext;  // imm sign extended
 
    sc_signal < sc_uint<32> > rega_exe, // value of register rs EXE phase
+                              rega_id2,
+                              regb_id2,
                              regb_exe, // value of regiter rt EXE phase
                              regb_mem; // value of regiter rt MEM phase
 
-   sc_signal <bool> reset_haz_idexe, reset_haz_ifid, reset_ifid, reset_idexe, reset_haz_exmem, reset_exmem;
+   sc_signal <bool> reset_haz_idexe, reset_haz_ifid, reset_ifid, reset_haz_id1id2, reset_id1id2, reset_idexe, reset_haz_exmem, reset_exmem;
    // control signals
    sc_signal <bool> MemRead, MemWrite, MemtoReg;
    sc_signal <bool> RegWrite, RegDst;

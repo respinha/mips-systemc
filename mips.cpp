@@ -44,7 +44,7 @@ void mips::buildIF(void)
 /**
  * buils ID stage components 
  */
-void mips::buildID(void)
+void mips::buildID1(void)
 {
       // Decodes Instruction
       dec1 = new decode ("decode");
@@ -82,9 +82,15 @@ void mips::buildID(void)
 
       rfile->enable(const1);
       
+
+      
+}
+
+void mips::buildID2(void) {
+
       // 16 to 32 bit signed Immediate extension
       e1 = new ext("ext");
-      e1->din(imm);
+      e1->din(imm_id2);
       e1->dout(imm_ext);
 
       // Control
@@ -101,7 +107,6 @@ void mips::buildID(void)
       ctrl->ALUSrc(ALUSrc);
       ctrl->RegWrite(RegWrite);
 }
-
 /**
  * buils EXE stage components 
  */
@@ -192,7 +197,7 @@ void mips::buildArchitecture(void){
       reg_if_id->inst_if(inst);
       reg_if_id->inst_id(inst_id);
       reg_if_id->PC4_if(PC4);
-      reg_if_id->PC4_id(PC4_id);
+      reg_if_id->PC4_id(PC4_id1);
       reg_if_id->PC_if(PC);
       reg_if_id->PC_id(PC_id);
       reg_if_id->valid_if(const1);
@@ -207,17 +212,47 @@ void mips::buildArchitecture(void){
       or_reset_ifid->din2(reset_haz_ifid);
       or_reset_ifid->dout(reset_ifid);
 
-      buildID();
+      buildID1();
+
+
+       //reg_id1 id2
+      reg_id1_id2 = new reg_id1_id2_t("reg_id1_id2");
+      reg_id1_id2->rega_id1(regdata1);
+      reg_id1_id2->rega_id2(rega_id2);
+      reg_id1_id2->regb_id1(regdata2);
+      reg_id1_id2->regb_id2(regb_id2);
+      reg_id1_id2->imm_id1(imm_id1);
+      reg_id1_id2->imm_id2(imm_id2);
+      reg_id1_id2->PC4_id1(PC4_id1);
+      reg_id1_id2->PC4_id2(PC4_id2);
+/*
+      reg_id1_id2->PC_id(PC_id);
+      reg_id1_id2->PC_exe(PC_exe);
+      reg_id1_id2->valid_id(valid_id);
+      reg_id1_id2->valid_exe(valid_exe);
+  */
+      reg_id1_id2->clk(clk);
+      reg_id1_id2->reset(reset_id1id2);
+      reg_id1_id2->enable(const1);
+
+      or_reset_id1id2 = new orgate("or_reset_id1id2");
+      or_reset_id1id2->din1(reset);
+      or_reset_id1id2->din2(reset_haz_id1id2);
+      or_reset_id1id2->dout(reset_id1id2);
+
+
+      buildID2();
+
 
       //reg_id_exe
       reg_id_exe = new reg_id_exe_t("reg_id_exe");
-      reg_id_exe->rega_id(regdata1);
+      reg_id_exe->rega_id(rega_id2);
       reg_id_exe->rega_exe(rega_exe);
-      reg_id_exe->regb_id(regdata2);
+      reg_id_exe->regb_id(regb_id2);
       reg_id_exe->regb_exe(regb_exe);
-      reg_id_exe->imm_id(imm_ext);
+      reg_id_exe->imm_id(imm_id2);
       reg_id_exe->imm_exe(imm_exe);
-      reg_id_exe->PC4_id(PC4_id);
+      reg_id_exe->PC4_id(PC4_id2);
       reg_id_exe->PC4_exe(PC4_exe);
       reg_id_exe->WriteReg_id(WriteReg);
       reg_id_exe->WriteReg_exe(WriteReg_exe);
@@ -235,10 +270,10 @@ void mips::buildArchitecture(void){
       reg_id_exe->ALUSrc_exe(ALUSrc_exe);
       reg_id_exe->ALUOp_id(ALUOp);
       reg_id_exe->ALUOp_exe(ALUOp_exe);
-      reg_id_exe->PC_id(PC_id);
+      /*reg_id_exe->PC_id(PC_id);
       reg_id_exe->PC_exe(PC_exe);
       reg_id_exe->valid_id(valid_id);
-      reg_id_exe->valid_exe(valid_exe);
+      reg_id_exe->valid_exe(valid_exe);*/
       reg_id_exe->clk(clk);
       reg_id_exe->reset(reset_idexe);
       reg_id_exe->enable(const1);
@@ -247,8 +282,7 @@ void mips::buildArchitecture(void){
       or_reset_idexe->din1(reset);
       or_reset_idexe->din2(reset_haz_idexe);
       or_reset_idexe->dout(reset_idexe);
-
-
+      
       buildEXE();
 
       //reg_exe_mem
