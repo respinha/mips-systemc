@@ -135,8 +135,8 @@ SC_MODULE(mips) {
 
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes
-   sc_signal < sc_uint<32> > PC_id;      // PC of instruction in ID
-   sc_signal < bool >        valid_id;   // true if there is an instruction in ID
+   sc_signal < sc_uint<32> > PC_id, PC_id2;      // PC of instruction in ID
+   sc_signal < bool >        valid_id, valid_id2;   // true if there is an instruction in ID
 
    //EXE
    sc_signal < bool > Zero;            // ALU output is zero

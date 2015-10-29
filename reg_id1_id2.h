@@ -32,20 +32,20 @@ SC_MODULE(reg_id1_id2_t) {
 
 	sc_in  < sc_uint<16> > imm_id1;
 	sc_out  < sc_uint<16> > imm_id2;
-/*
-	sc_in  < sc_uint<32> > PC_id;   // only for visualization purposes
-	sc_out < sc_uint<32> > PC_exe;  // only for visualization purposes
-	sc_in  < bool > valid_id;       // only for visualization purposes
-	sc_out < bool > valid_exe;      // only for visualization purposes
-*/
+
+	sc_in  < sc_uint<32> > PC_id1;   // only for visualization purposes
+	sc_out < sc_uint<32> > PC_id2;  // only for visualization purposes
+	sc_in  < bool > valid_id1;       // only for visualization purposes
+	sc_out < bool > valid_id2;      // only for visualization purposes
+
 	// Modules
 	
 	regT < sc_uint<32> > *PC4;
 	regT < sc_uint<5>  > *rega, *regb;
 	regT < sc_uint<16> > *imm;
-/*	regT < sc_uint<32> > *PC;      // only for visualization purposes
+	regT < sc_uint<32> > *PC;      // only for visualization purposes
 	regT < bool > *valid;          // only for visualization purposes
-*/
+
 	SC_CTOR(reg_id1_id2_t) {
 
 		rega = new regT < sc_uint<5> > ("rega");;
@@ -75,21 +75,21 @@ SC_MODULE(reg_id1_id2_t) {
 		imm->clk(clk);
 		imm->enable(enable);
 		imm->reset(reset);
-/*
+
 		PC = new regT < sc_uint<32> >("PC");
-		PC->din(PC_id);
-		PC->dout(PC_exe);
+		PC->din(PC_id1);
+		PC->dout(PC_id2);
 		PC->clk(clk);
 		PC->enable(enable);
 		PC->reset(reset);
 
 		valid = new regT < bool >("valid");
-		valid->din(valid_id);
-		valid->dout(valid_exe);
+		valid->din(valid_id1);
+		valid->dout(valid_id2);
 		valid->clk(clk);
 		valid->enable(enable);
 		valid->reset(reset);
-*/
+
 	}
 };
 

@@ -228,12 +228,12 @@ void mips::buildArchitecture(void){
       reg_id1_id2->imm_id2(imm_id2);
       reg_id1_id2->PC4_id1(PC4_id1);
       reg_id1_id2->PC4_id2(PC4_id2);
-/*
-      reg_id1_id2->PC_id(PC_id);
-      reg_id1_id2->PC_exe(PC_exe);
-      reg_id1_id2->valid_id(valid_id);
-      reg_id1_id2->valid_exe(valid_exe);
-  */
+
+      reg_id1_id2->PC_id1(PC_id);
+      reg_id1_id2->PC_id2(PC_id2);
+      reg_id1_id2->valid_id1(valid_id);
+      reg_id1_id2->valid_id2(valid_id2);
+
       reg_id1_id2->clk(clk);
       reg_id1_id2->reset(reset_id1id2);
       reg_id1_id2->enable(const1);
@@ -273,9 +273,9 @@ void mips::buildArchitecture(void){
       reg_id_exe->ALUSrc_exe(ALUSrc_exe);
       reg_id_exe->ALUOp_id(ALUOp);
       reg_id_exe->ALUOp_exe(ALUOp_exe);
-      reg_id_exe->PC_id(PC_id);
+      reg_id_exe->PC_id(PC_id2);
       reg_id_exe->PC_exe(PC_exe);
-      reg_id_exe->valid_id(valid_id);
+      reg_id_exe->valid_id(valid_id2);
       reg_id_exe->valid_exe(valid_exe);
       reg_id_exe->clk(clk);
       reg_id_exe->reset(reset_idexe);
