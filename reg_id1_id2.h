@@ -44,6 +44,8 @@ SC_MODULE(reg_id1_id2_t) {
 	regT < sc_uint<5>  > *rega, *regb;
 	regT < sc_uint<16> > *imm;
 	regT < sc_uint<32> > *PC;      // only for visualization purposes
+	regT < sc_uint<6> > *opcode;
+	regT < sc_uint<6> > *funct;
 	regT < bool > *valid;          // only for visualization purposes
 
 	SC_CTOR(reg_id1_id2_t) {
@@ -75,6 +77,20 @@ SC_MODULE(reg_id1_id2_t) {
 		imm->clk(clk);
 		imm->enable(enable);
 		imm->reset(reset);
+
+		opcode = new regT < sc_uint<6> >("opcode");
+		opcode->din(opcode_id1);
+		opcode->dout(opcode_id2);
+		opcode->clk(clk);
+		opcode->enable(enable);
+		opcode->reset(reset);
+
+		funct = new regT < sc_uint<6> >("funct");
+		funct->din(funct_id1);
+		funct->dout(funct_id2);
+		funct->clk(clk);
+		funct->enable(enable);
+		funct->reset(reset);
 
 		PC = new regT < sc_uint<32> >("PC");
 		PC->din(PC_id1);

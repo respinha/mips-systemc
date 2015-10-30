@@ -45,11 +45,20 @@ MIPSarchCanvas::MIPSarchCanvas(mips &m, QObject *parent) : Q3Canvas(parent), mip
     qText=new Q3CanvasText("nop",this);
     qText->setTextFlags(Qt::AlignLeft | Qt::AlignTop);
     qText->setVisible(true);
-    qText->move(253,6);
+    qText->move(200,6);
     qText->setColor(QColor("red"));
     instStage.push_back(qText);
     pcStage.push_back(new PortValRead(mips1.reg_if_id->PC_id,"PC_id"));
     validpcStage.push_back(new PortValRead(mips1.reg_if_id->valid_id,"valid_PC_id"));
+
+    qText=new Q3CanvasText("nop",this);
+    qText->setTextFlags(Qt::AlignLeft | Qt::AlignTop);
+    qText->setVisible(true);
+    qText->move(300,6);
+    qText->setColor(QColor("green"));
+    instStage.push_back(qText);
+    pcStage.push_back(new PortValRead(mips1.reg_id1_id2->PC_id2,"PC_id2"));
+    validpcStage.push_back(new PortValRead(mips1.reg_id1_id2->valid_id2,"valid_PC_id2"));
 
     qText=new Q3CanvasText("nop",this);
     qText->setTextFlags(Qt::AlignLeft | Qt::AlignTop);
@@ -146,12 +155,12 @@ MIPSarchCanvas::MIPSarchCanvas(mips &m, QObject *parent) : Q3Canvas(parent), mip
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);
 
-    portVal=new PortValItem(this,mips1.dec1->opcode, "opcode");
+    portVal=new PortValItem(this,mips1.reg_id1_id2->opcode_id2, "opcode");
     portVal->move(290,95);
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);
 
-    portVal=new PortValItem(this,mips1.dec1->funct, "funct");
+    portVal=new PortValItem(this,mips1.reg_id1_id2->funct_id2, "funct");
     portVal->move(290,130);
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);

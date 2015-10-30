@@ -23,8 +23,8 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     //resize viewport
     resizeContents(820+5,194+5);
 
-    resize( QSize(820+10,194+10) ); 
-    setMaximumSize( QSize(820+10,194+10) ); 
+    resize( QSize(1000+10,250+10) ); 
+    setMaximumSize( QSize(1000+10,250+10) ); 
 
     setIcon(QPixmap("mips.xpm"));
 
@@ -86,6 +86,28 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     addChild(dmemView,5+MODSTEPX*4,5);
     
     connect(this,SIGNAL(updateModules()), dmemView, SLOT(redrawModule()));
+
+    //hazview
+    ModView *hazview=new ModView("haz",viewport());
+    hazview->addPort(mips1.hazard_unit->rs, "rs");
+    hazview->addPort(mips1.hazard_unit->rt, "rt");
+    hazview->addPort(mips1.hazard_unit->MemRead, "MemRead");
+    hazview->addPort(mips1.hazard_unit->WriteReg_exe, "WrReg_e");
+    hazview->addPort(mips1.hazard_unit->WriteReg_mem, "WrReg_m");
+    hazview->addPort(mips1.hazard_unit->RegWrite_exe, "RWrite_e");
+    hazview->addPort(mips1.hazard_unit->RegWrite_mem, "RWrite_m");
+    hazview->addPort(mips1.hazard_unit->BranchTaken, "BrTken"); 
+    hazview->addPort(mips1.hazard_unit->enable_pc, "en_pc");
+    hazview->addPort(mips1.hazard_unit->enable_ifid, "en_ifid");
+    hazview->addPort(mips1.hazard_unit->reset_id1id2, "rs_id1id2");
+    hazview->addPort(mips1.hazard_unit->reset_idexe, "rs_idexe");
+    hazview->addPort(mips1.hazard_unit->reset_ifid, "rs_ifid");
+    hazview->addPort(mips1.hazard_unit->reset_exmem, "rs_exmem");
+
+
+    addChild(hazview,5+MODSTEPX*5,5);
+    
+    connect(this,SIGNAL(updateModules()), hazview, SLOT(redrawModule()));
 
     setFocusPolicy(Qt::StrongFocus);
 }
