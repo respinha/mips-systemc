@@ -24,17 +24,17 @@
 template <class T> class mux4: public sc_module
 {
 public:
-  sc_in< T >  din0;
-  sc_in< T >  din1;        
-  sc_in< T >  din2;
-  sc_in< T >  din3;
+  sc_in< sc_uint<32> >  PC4;
+  sc_in< sc_uint<32> >  jr;        
+  sc_in< sc_uint<32> >  bta;
+  sc_in< sc_uint<32> >  jta;
   sc_in< sc_uint<2> >  sel;        
   sc_out< T > dout;
 
   SC_CTOR(mux4)
      {      
       SC_METHOD(entry);
-      sensitive << din0 << din1 << din2 << din3 << sel;
+      sensitive << PC4 << jr << bta << jta << sel;
     }
   
   void entry();
@@ -44,13 +44,13 @@ public:
 template <class T> void mux4<T>::entry()
 {
   switch(sel.read()) {
-    case 0: dout.write(din0.read());
+    case 0: dout.write(PC4.read());
             break;
-    case 1: dout.write(din1.read());
+    case 1: dout.write(jr.read());
             break;
-    case 2: dout.write(din2.read());
+    case 2: dout.write(bta.read());
             break;
-    case 3: dout.write(din3.read());
+    case 3: dout.write(jta.read());
             break;
   }
 }

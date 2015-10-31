@@ -32,12 +32,14 @@ void mips::buildIF(void)
       add4->op2(const4);
       add4->res(PC4);
 
-      // Selects Next Program Counter Value
-      mPC = new mux< sc_uint<32> > ("mPC");
+      // Selects Next Program Counter Value (change to MUX4!!!)
+      mPC = new mux4< sc_uint<32> > ("mPC");
    
-      mPC->sel(BranchTaken);
-      mPC->din0(PC4);
-      mPC->din1(BranchTarget_mem);
+      mPC->sel(pc_sel);
+      mPC->PC4(PC4);
+      mPC->bta(BranchTarget);
+      mPC->jta(JumpTarget);
+      mPC->jr(regdata1);
       mPC->dout(NPC);
 }
 
@@ -56,6 +58,7 @@ void mips::buildID1(void)
       dec1->opcode(opcode);
       dec1->shamt(shamt);
       dec1->funct(funct);
+      dec1->jump(jump);
 
       // Register File
       rfile = new regfile ("regfile");
@@ -77,6 +80,8 @@ void mips::buildID1(void)
 }
 
 void mips::buildID2(void) {
+
+
 
 
       // Selects Register to Write
@@ -105,6 +110,45 @@ void mips::buildID2(void) {
       ctrl->ALUOp(ALUOp);
       ctrl->ALUSrc(ALUSrc);
       ctrl->RegWrite(RegWrite);
+      ctrl->jbr(jbr);
+
+      // shift left 2 imm_ext 
+      sl2 = new shiftl2("sl2");
+      sl2->din(imm_ext);
+      sl2->dout(addr_ext);
+
+      // Adds Branch Immediate to Program Counter + 4
+      addbr = new add ("addbr");
+   
+      addbr->op1(PC4_id2);
+      addbr->op2(addr_ext);  
+      addbr->res(BranchTarget);
+
+      // Comparator
+      comp = new comparator("comparator");
+      comp->din0(regdata1);
+      comp->din1(regdata2);
+      comp->gr(gr);
+      comp->le(le);
+      comp->eq(eq);
+
+      // Jumps & Branches Control Unit
+      ctrl2 = new control_jbr("control_jbr");
+      ctrl2->le(le);
+      ctrl2->gr(gr);
+      ctrl2->eq(eq);
+      ctrl2->jbr(jbr);
+      ctrl2->select(pc_sel);
+      ctrl2->btaken(BranchTaken);
+
+      concat = new concatenator("concat");
+      concat->PC4(PC4_id1);
+      concat->jump(jump_id2);
+      concat->PreShift(jta_preshift);
+
+      sl2_jump = new shiftl2("jumpShift");
+      sl2_jump->din(jta_preshift);
+      sl2_jump->dout(JumpTarget);
 }
 /**
  * buils EXE stage components 
@@ -119,6 +163,8 @@ void mips::buildEXE(void)
       m1->din1(imm_exe);
       m1->dout(ALUIn2);
 
+
+
       // ALU
       alu1 = new alu("alu");
 
@@ -127,18 +173,6 @@ void mips::buildEXE(void)
       alu1->op(ALUOp_exe);
       alu1->dout(ALUOut);
       alu1->zero(Zero);
-
-      // shift left 2 imm_ext 
-      sl2 = new shiftl2("sl2");
-      sl2->din(imm_exe);
-      sl2->dout(addr_ext);
-
-      // Adds Branch Immediate to Program Counter + 4
-      addbr = new add ("addbr");
-   
-      addbr->op1(PC4_exe);
-      addbr->op2(addr_ext);  
-      addbr->res(BranchTarget);
 
 }
 
@@ -157,12 +191,14 @@ void mips::buildMEM(void)
       datamem->rd(MemRead_mem);
       datamem->clk(clk);
 
+/*
       // Enables Branch
       a1 = new andgate ("a1");
 
       a1->din1(Branch_mem);
       a1->din2(Zero_mem);
       a1->dout(BranchTaken);
+*/
 }
 
 /**
@@ -228,6 +264,8 @@ void mips::buildArchitecture(void){
       reg_id1_id2->imm_id2(imm_id2);
       reg_id1_id2->PC4_id1(PC4_id1);
       reg_id1_id2->PC4_id2(PC4_id2);
+      reg_id1_id2->jump_id1(jump);
+      reg_id1_id2->jump_id2(jump_id2);
 
       reg_id1_id2->PC_id1(PC_id);
       reg_id1_id2->PC_id2(PC_id2);
@@ -255,8 +293,8 @@ void mips::buildArchitecture(void){
       reg_id_exe->regb_exe(regb_exe);
       reg_id_exe->imm_id(imm_ext);
       reg_id_exe->imm_exe(imm_exe);
-      reg_id_exe->PC4_id(PC4_id2);
-      reg_id_exe->PC4_exe(PC4_exe);
+      //reg_id_exe->PC4_id(PC4_id2);
+      //reg_id_exe->PC4_exe(PC4_exe); 
       reg_id_exe->WriteReg_id(WriteReg);
       reg_id_exe->WriteReg_exe(WriteReg_exe);
       reg_id_exe->MemRead_id(MemRead);
@@ -266,7 +304,7 @@ void mips::buildArchitecture(void){
       reg_id_exe->MemtoReg_id(MemtoReg);
       reg_id_exe->MemtoReg_exe(MemtoReg_exe);
       reg_id_exe->Branch_id(Branch);
-      reg_id_exe->Branch_exe(Branch_exe);
+      //reg_id_exe->Branch_exe(Branch_exe);
       reg_id_exe->RegWrite_id(RegWrite);
       reg_id_exe->RegWrite_exe(RegWrite_exe);
       reg_id_exe->ALUSrc_id(ALUSrc);
@@ -298,14 +336,14 @@ void mips::buildArchitecture(void){
       reg_exe_mem->MemWrite_mem(MemWrite_mem);
       reg_exe_mem->MemtoReg_exe(MemtoReg_exe);
       reg_exe_mem->MemtoReg_mem(MemtoReg_mem);
-      reg_exe_mem->Branch_exe(Branch_exe);
-      reg_exe_mem->Branch_mem(Branch_mem);
+      //reg_exe_mem->Branch_exe(Branch_exe);
+      //reg_exe_mem->Branch_mem(Branch_mem);
       reg_exe_mem->RegWrite_exe(RegWrite_exe);
       reg_exe_mem->RegWrite_mem(RegWrite_mem);
-      reg_exe_mem->Zero_exe(Zero);
-      reg_exe_mem->Zero_mem(Zero_mem);
-      reg_exe_mem->BranchTarget_exe(BranchTarget);
-      reg_exe_mem->BranchTarget_mem(BranchTarget_mem);
+      //reg_exe_mem->Zero_exe(Zero);
+      //reg_exe_mem->Zero_mem(Zero_mem);
+      //reg_exe_mem->BranchTarget_exe(BranchTarget);
+      //reg_exe_mem->BranchTarget_mem(BranchTarget_mem);
       reg_exe_mem->regb_exe(regb_exe);
       reg_exe_mem->regb_mem(regb_mem);
       reg_exe_mem->WriteReg_exe(WriteReg_exe);

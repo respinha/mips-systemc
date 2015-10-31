@@ -22,9 +22,10 @@ SC_MODULE(reg_id_exe_t) {
 	sc_in  < bool > clk;
 	sc_in  < bool > reset;
 	sc_in  < bool > enable;
-
-	sc_in  < sc_uint<32> > rega_id, regb_id, imm_id, PC4_id;
-	sc_out < sc_uint<32> > rega_exe, regb_exe, imm_exe, PC4_exe;
+	sc_in  < bool > Branch_id;
+	
+	sc_in  < sc_uint<32> > rega_id, regb_id, imm_id;
+	sc_out < sc_uint<32> > rega_exe, regb_exe, imm_exe;
 
 	sc_in  < sc_uint<5> > WriteReg_id;
 	sc_out < sc_uint<5> > WriteReg_exe;
@@ -32,8 +33,9 @@ SC_MODULE(reg_id_exe_t) {
 	sc_in  < bool > MemRead_id, MemWrite_id, MemtoReg_id; 
 	sc_out < bool > MemRead_exe, MemWrite_exe, MemtoReg_exe; 
 
-	sc_in  < bool > Branch_id, ALUSrc_id, RegWrite_id;
-	sc_out < bool > Branch_exe, ALUSrc_exe, RegWrite_exe;
+	sc_in  < bool > ALUSrc_id, RegWrite_id;
+	sc_out < bool > ALUSrc_exe, RegWrite_exe;
+
 
 	sc_in  < sc_uint<3> > ALUOp_id;
 	sc_out < sc_uint<3> > ALUOp_exe;
@@ -45,8 +47,8 @@ SC_MODULE(reg_id_exe_t) {
 
 	// Modules
 	
-	regT < sc_uint<32> > *rega,*regb,*imm,*PC4;
-	regT < bool > *MemRead, *MemWrite, *MemtoReg, *Branch, *RegWrite, *ALUSrc; 
+	regT < sc_uint<32> > *rega,*regb,*imm;//,*PC4;
+	regT < bool > *MemRead, *MemWrite, *MemtoReg, *RegWrite, *ALUSrc; 
 	regT < sc_uint<5> > *WriteReg;
 	regT < sc_uint<3> > *ALUOp;
 
@@ -75,13 +77,14 @@ SC_MODULE(reg_id_exe_t) {
 		WriteReg->clk(clk);
 		WriteReg->enable(enable);
 		WriteReg->reset(reset);
-
+/*
 		PC4 = new regT < sc_uint<32> >("PC4");
 		PC4->din(PC4_id);
 		PC4->dout(PC4_exe);
 		PC4->clk(clk);
 		PC4->enable(enable);
 		PC4->reset(reset);
+*/
 
 		imm = new regT < sc_uint<32> >("imm");
 		imm->din(imm_id);
@@ -111,12 +114,13 @@ SC_MODULE(reg_id_exe_t) {
 		MemtoReg->enable(enable);
 		MemtoReg->reset(reset);
 
-		Branch = new regT < bool >("Branch");
+/*		Branch = new regT < bool >("Branch");
 		Branch->din(Branch_id);
 		Branch->dout(Branch_exe);
 		Branch->clk(clk);
 		Branch->enable(enable);
 		Branch->reset(reset);
+		*/
 
 		RegWrite = new regT < bool >("RegWrite");
 		RegWrite->din(RegWrite_id);

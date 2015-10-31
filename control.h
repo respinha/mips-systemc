@@ -30,6 +30,17 @@ SC_MODULE(control) {
   sc_in< sc_uint<6> >  opcode;
   sc_in< sc_uint<6> >  funct;
 
+  /* jbr (output) defined as:
+  *   0: No jump/branch
+  *   1: beq
+  *   2: bne
+  *   3: bgtz
+  *   4: blez
+  *   5: j
+  *   6: jr
+  */
+  sc_out < sc_uint<3> > jbr;
+
   sc_out< bool >  RegDst;        
   sc_out< bool >  Branch;        
   sc_out< bool >  MemRead;        

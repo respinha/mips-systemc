@@ -32,7 +32,8 @@ SC_MODULE(decode) {
   sc_out< sc_uint<16> >  imm;        
   sc_out< sc_uint<6> > opcode;        
   sc_out< sc_uint<5> > shamt;        
-  sc_out< sc_uint<6> > funct;        
+  sc_out< sc_uint<6> > funct;
+  sc_out< sc_uint<26> > jump;        
 
   SC_CTOR(decode)
      {      

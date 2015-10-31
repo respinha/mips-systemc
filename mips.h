@@ -25,14 +25,18 @@
 #include "add.h"
 #include "gates.h"
 
+
 #include "regT.h"
 #include "reg_if_id.h"
 #include "reg_id_exe.h"
 #include "reg_exe_mem.h"
 #include "reg_mem_wb.h"
 #include "reg_id1_id2.h"
-
 #include "mux4.h"
+
+#include "comp.h"
+#include "control_jbr.h"
+#include "concat.h"
 /**
  * MIPS module.
  * MIPS module is the main module of the MIPS simulator.
@@ -57,18 +61,26 @@ SC_MODULE(mips) {
    registo           *PCreg;     // PC register
    imem              *instmem;   // instruction memory
    add *add4;                    // adds 4 to PC
-   mux< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
+   mux4< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
    orgate *or_reset_ifid;
+   sc_signal < sc_uint<26> > jump, jump_id2;
 
    //ID
    decode            *dec1;      // decodes instruction
    regfile           *rfile;     // register file
    control           *ctrl;      // control
+   control_jbr       *ctrl2;     // jumps & brances control unit
    mux< sc_uint<5> >  *mr;       // selects destination register
    ext *e1;                      // sign extends imm to 32 bits
    orgate *or_reset_idexe;
    orgate *or_reset_id1id2;
    hazard *hazard_unit;
+   comparator *comp;
+   sc_signal < sc_uint<2> > pc_sel;
+   sc_signal < sc_uint<32> > JumpTarget;
+   shiftl2 *sl2_jump;
+   concatenator *concat;
+   sc_signal< sc_uint<32> > jta_preshift;
 
    //EXE
    alu               *alu1;      // ALU
@@ -117,6 +129,8 @@ SC_MODULE(mips) {
                              regdata2, // value of regiter rt
 			     WriteVal; // value to write in register WriteReg
 
+   sc_signal < bool > eq, le, gr; // values given by comparator
+   sc_signal < sc_uint<3> > jbr;
    sc_signal < sc_uint<32> > imm_ext;  // imm sign extended
    sc_signal < sc_uint<16> > imm_id2;
    sc_signal < sc_uint<32> > rega_exe, // value of register rs EXE phase
@@ -140,7 +154,7 @@ SC_MODULE(mips) {
 
    //EXE
    sc_signal < bool > Zero;            // ALU output is zero
-   sc_signal < sc_uint<32> > imm_exe, PC4_exe;
+   sc_signal < sc_uint<32> > imm_exe; //, PC4_exe;
 
    sc_signal < sc_uint<32> > addr_ext; // imm_ext shift left 2
    sc_signal < sc_uint<5> > WriteReg_exe;
@@ -151,7 +165,7 @@ SC_MODULE(mips) {
    sc_signal <bool> RegWrite_exe;
    sc_signal <bool> ALUSrc_exe;
    sc_signal <sc_uint<3> > ALUOp_exe;
-   sc_signal <bool> Branch_exe;
+   //sc_signal <bool> Branch_exe;
    
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes
@@ -160,11 +174,11 @@ SC_MODULE(mips) {
 
    //MEM
    sc_signal < sc_uint<32> > MemOut;   // data memory output
-   sc_signal < sc_uint<32> > ALUOut_mem, BranchTarget_mem;   
+   sc_signal < sc_uint<32> > ALUOut_mem;//, BranchTarget_mem;   
    sc_signal < sc_uint<5> > WriteReg_mem;   
    sc_signal <bool> MemRead_mem, MemWrite_mem, MemtoReg_mem;
    sc_signal <bool> RegWrite_mem;
-   sc_signal <bool> Branch_mem, Zero_mem;
+   //sc_signal <bool> Branch_mem, Zero_mem;
 
    // the following two signals are not used by the architecture
    // they are used only for visualization purposes

@@ -1,5 +1,5 @@
-#ifndef CONTROLMOD_H
-#define CONTROLMOD_H
+#ifndef CONTROLJBR_H
+#define CONTROLJBR_H
 
 /**
  *
@@ -27,17 +27,18 @@
 
 SC_MODULE(control_jbr) {
   
-  sc_in< sc_uint<32> > loe;
-  sc_in< sc_uint<32> > gr;
-  sc_in< sc_uint<32> > eq;
+  sc_in< bool > le;
+  sc_in< bool > gr;
+  sc_in< bool > eq;
+  sc_in< sc_uint<3> > jbr;
 
-  sc_out< sc_uint<2> > dout;
+  sc_out< sc_uint<2> > select;
   sc_out< bool > btaken;     
 
   SC_CTOR(control_jbr)
      {      
       SC_METHOD(entry);
-      sensitive << loe << gr << eq;
+      sensitive << le << gr << eq << jbr;
     }
   
   void entry();

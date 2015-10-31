@@ -51,6 +51,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     ctrlView->addPort(mips1.ctrl->ALUSrc,  "ALUSrc");
     ctrlView->addPort(mips1.ctrl->ALUOp,   "ALUOp");
     ctrlView->addPort(mips1.ctrl->RegWrite,"RegWrite");
+    ctrlView->addPort(mips1.ctrl->jbr,"jbr");
     addChild(ctrlView,5+MODSTEPX*1,5);
     
     connect(this,SIGNAL(updateModules()), ctrlView, SLOT(redrawModule()));

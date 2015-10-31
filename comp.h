@@ -6,8 +6,8 @@
 SC_MODULE(comparator) {
   
   sc_in< sc_uint<32> >  din0;
-  sc_out< sc_uint<32> >  din1;        
-  sc_out< bool >  gr, eq, loe;
+  sc_in< sc_uint<32> >  din1;        
+  sc_out< bool >  gr, eq, le;
 
   SC_CTOR(comparator)
      {      

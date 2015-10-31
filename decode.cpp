@@ -17,4 +17,5 @@ void decode::entry()
   opcode.write(tinst.range(31,26));
   shamt.write(tinst.range(10,6));
   funct.write(tinst.range(5,0));
+  jump.write(tinst.range(25,0));
 }

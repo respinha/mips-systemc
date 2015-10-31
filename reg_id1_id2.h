@@ -23,6 +23,8 @@ SC_MODULE(reg_id1_id2_t) {
 	sc_in  < bool > reset;
 	sc_in  < bool > enable;	
 	sc_in  < sc_uint<6> > opcode_id1, funct_id1;
+	sc_in  < sc_uint<26> > jump_id1;
+	sc_out  < sc_uint<26> > jump_id2;
 	sc_in  < sc_uint<5> > rega_id1, regb_id1; 
 	sc_in  < sc_uint<32> >PC4_id1;
 
@@ -46,6 +48,7 @@ SC_MODULE(reg_id1_id2_t) {
 	regT < sc_uint<32> > *PC;      // only for visualization purposes
 	regT < sc_uint<6> > *opcode;
 	regT < sc_uint<6> > *funct;
+	regT < sc_uint<26> > *jump;
 	regT < bool > *valid;          // only for visualization purposes
 
 	SC_CTOR(reg_id1_id2_t) {
@@ -91,6 +94,13 @@ SC_MODULE(reg_id1_id2_t) {
 		funct->clk(clk);
 		funct->enable(enable);
 		funct->reset(reset);
+
+		jump = new regT< sc_uint<26> >("jump");
+		jump->din(jump_id1);
+		jump->dout(jump_id2);
+		jump->clk(clk);
+		jump->enable(enable);
+		jump->reset(reset);
 
 		PC = new regT < sc_uint<32> >("PC");
 		PC->din(PC_id1);
