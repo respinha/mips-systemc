@@ -276,7 +276,7 @@ MIPSarchCanvas::MIPSarchCanvas(mips &m, QObject *parent) : Q3Canvas(parent), mip
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal); */
 
-    portVal=new PortValItem(this,mips1.addbr->res, "BranchTarget");
+    portVal=new PortValItem(this,mips1.jbrcalc->br_target, "BranchTarget");
     portVal->move(599,167);
     portVal->setColor(QColor("blue"));
     portValVec.push_back(portVal);

@@ -81,9 +81,6 @@ void mips::buildID1(void)
 
 void mips::buildID2(void) {
 
-
-
-
       // Selects Register to Write
       mr = new mux< sc_uint<5> > ("muxRDst");
    
@@ -117,12 +114,15 @@ void mips::buildID2(void) {
       sl2->din(imm_ext);
       sl2->dout(addr_ext);
 
+/*
       // Adds Branch Immediate to Program Counter + 4
       addbr = new add ("addbr");
    
       addbr->op1(PC4_id2);
       addbr->op2(addr_ext);  
       addbr->res(BranchTarget);
+
+      */
 
       // Comparator
       comp = new comparator("comparator");
@@ -141,14 +141,13 @@ void mips::buildID2(void) {
       ctrl2->select(pc_sel);
       ctrl2->btaken(BranchTaken);
 
-      concat = new concatenator("concat");
-      concat->PC4(PC4_id1);
-      concat->jump(jump_id2);
-      concat->PreShift(jta_preshift);
+      jbrcalc = new jbrcalculator("jbrcalc");
+      jbrcalc->PC4(PC4_id2);
+      jbrcalc->addr_ext(addr_ext);
+      jbrcalc->jump_id2(jump_id2);
+      jbrcalc->jump_target(JumpTarget);
+      jbrcalc->br_target(BranchTarget);
 
-      sl2_jump = new shiftl2("jumpShift");
-      sl2_jump->din(jta_preshift);
-      sl2_jump->dout(JumpTarget);
 }
 /**
  * buils EXE stage components 
@@ -407,7 +406,7 @@ mips::~mips(void)
       delete PCreg;
       delete instmem;
       delete add4;
-      delete addbr;
+      //delete addbr;
       //delete a1;
       delete mPC;
       delete dec1;
@@ -422,8 +421,7 @@ mips::~mips(void)
       delete ctrl;
       delete ctrl2;
       delete comp;
-      delete sl2_jump;
-      delete concat;
+      delete jbrcalc;
 
       delete hazard_unit;
       delete or_reset_idexe;

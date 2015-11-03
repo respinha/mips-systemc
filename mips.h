@@ -36,7 +36,7 @@
 
 #include "comp.h"
 #include "control_jbr.h"
-#include "concat.h"
+#include "jbrcalc.h"
 /**
  * MIPS module.
  * MIPS module is the main module of the MIPS simulator.
@@ -78,15 +78,13 @@ SC_MODULE(mips) {
    comparator *comp;
    sc_signal < sc_uint<2> > pc_sel;
    sc_signal < sc_uint<32> > JumpTarget;
-   shiftl2 *sl2_jump;
-   concatenator *concat;
-   sc_signal< sc_uint<32> > jta_preshift;
+   jbrcalculator *jbrcalc;
 
    //EXE
    alu               *alu1;      // ALU
    mux< sc_uint<32> > *m1;       // selects 2nd ALU operand
    shiftl2 *sl2;                 // shift left 2 imm_ext
-   add *addbr;                   // adds imm to PC + 4
+   //add *addbr;                   // adds imm to PC + 4
 
    //MEM
    dmem              *datamem;   // data memory
