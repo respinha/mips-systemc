@@ -22,7 +22,7 @@ SC_MODULE(reg_id_exe_t) {
 	sc_in  < bool > clk;
 	sc_in  < bool > reset;
 	sc_in  < bool > enable;
-	sc_in  < bool > Branch_id;
+	//sc_in  < bool > Branch_id;
 	
 	sc_in  < sc_uint<32> > rega_id, regb_id, imm_id;
 	sc_out < sc_uint<32> > rega_exe, regb_exe, imm_exe;

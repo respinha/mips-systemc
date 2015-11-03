@@ -41,8 +41,7 @@ SC_MODULE(control) {
   */
   sc_out < sc_uint<3> > jbr;
 
-  sc_out< bool >  RegDst;        
-  sc_out< bool >  Branch;        
+  sc_out< bool >  RegDst;              
   sc_out< bool >  MemRead;        
   sc_out< bool >  MemtoReg;        
   sc_out< sc_uint<3> >  ALUOp;        

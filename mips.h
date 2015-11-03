@@ -90,7 +90,7 @@ SC_MODULE(mips) {
 
    //MEM
    dmem              *datamem;   // data memory
-   andgate *a1;                  // beq instruction and equal values
+   //andgate *a1;                  // beq instruction and equal values
    orgate *or_reset_exmem;
    //WB
    mux< sc_uint<32> > *m2;       // selects value to write in register (ALUout or MemOut)
@@ -153,7 +153,7 @@ SC_MODULE(mips) {
    sc_signal < bool >        valid_id, valid_id2;   // true if there is an instruction in ID
 
    //EXE
-   sc_signal < bool > Zero;            // ALU output is zero
+  // sc_signal < bool > Zero;            // ALU output is zero
    sc_signal < sc_uint<32> > imm_exe; //, PC4_exe;
 
    sc_signal < sc_uint<32> > addr_ext; // imm_ext shift left 2

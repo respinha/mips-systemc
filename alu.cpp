@@ -31,7 +31,6 @@ void alu::calc()
        case 7: res = (asign < bsign);  // set on less than
                break;
     }
-
-    zero.write(res == 0);
+    
     dout.write(res);
 }

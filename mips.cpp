@@ -103,7 +103,7 @@ void mips::buildID2(void) {
       ctrl->opcode(opcode_id2); 
       ctrl->funct(funct_id2);   
       ctrl->RegDst(RegDst); 
-      ctrl->Branch(Branch);
+      //ctrl->Branch(Branch);
       ctrl->MemRead(MemRead);
       ctrl->MemWrite(MemWrite);
       ctrl->MemtoReg(MemtoReg);
@@ -172,7 +172,7 @@ void mips::buildEXE(void)
       alu1->din2(ALUIn2);
       alu1->op(ALUOp_exe);
       alu1->dout(ALUOut);
-      alu1->zero(Zero);
+      //alu1->zero(Zero);
 
 }
 
@@ -303,7 +303,7 @@ void mips::buildArchitecture(void){
       reg_id_exe->MemWrite_exe(MemWrite_exe);
       reg_id_exe->MemtoReg_id(MemtoReg);
       reg_id_exe->MemtoReg_exe(MemtoReg_exe);
-      reg_id_exe->Branch_id(Branch);
+      //reg_id_exe->Branch_id(Branch);
       //reg_id_exe->Branch_exe(Branch_exe);
       reg_id_exe->RegWrite_id(RegWrite);
       reg_id_exe->RegWrite_exe(RegWrite_exe);
@@ -408,7 +408,7 @@ mips::~mips(void)
       delete instmem;
       delete add4;
       delete addbr;
-      delete a1;
+      //delete a1;
       delete mPC;
       delete dec1;
       delete mr;
@@ -420,6 +420,10 @@ mips::~mips(void)
       delete datamem;
       delete m2;
       delete ctrl;
+      delete ctrl2;
+      delete comp;
+      delete sl2_jump;
+      delete concat;
 
       delete hazard_unit;
       delete or_reset_idexe;

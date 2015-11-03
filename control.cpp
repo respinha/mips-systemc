@@ -6,7 +6,9 @@
  */
 void control::entry()
 {
+  jbr.write(0);
   switch(opcode.read()) {
+    
     case 0: // R-format
         
         RegDst.write(1);  
@@ -15,13 +17,10 @@ void control::entry()
 	    RegWrite.write(1);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(0);
-
-	    if (funct.read() == 8) // jr 
-	    	jbr.write(6);
-	    else jbr.write(0);
 
 	    switch(funct.read()) {
+	       case 8: jbr.write(6);  // jr
+	       	       break;
 
 	       case 32: ALUOp.write(2); // add
 	                break;
@@ -41,7 +40,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
 	    ALUOp.write(6);
 
 	    jbr.write(5);
@@ -53,7 +51,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
 	    ALUOp.write(6);
 
 	    jbr.write(1);
@@ -64,7 +61,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
 	    ALUOp.write(6);
 
 	    jbr.write(2);
@@ -75,7 +71,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
 	    ALUOp.write(6);
 
 	    jbr.write(4);
@@ -87,7 +82,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(0);
-	    Branch.write(1);
 	    ALUOp.write(6);
 
 	    jbr.write(3);
@@ -101,7 +95,6 @@ void control::entry()
 	    RegWrite.write(1);
 	    MemRead.write(1);
 	    MemWrite.write(0);
-	    Branch.write(0);
 	    ALUOp.write(2);
 	    
 	    jbr.write(0);
@@ -112,7 +105,6 @@ void control::entry()
 	    RegWrite.write(0);
 	    MemRead.write(0);
 	    MemWrite.write(1);
-	    Branch.write(0);
 	    ALUOp.write(2);
 	    
 	    jbr.write(0);

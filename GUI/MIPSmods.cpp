@@ -44,7 +44,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     ctrlView->addPort(mips1.ctrl->opcode,  "opcode");
     ctrlView->addPort(mips1.ctrl->funct,   "funct");
     ctrlView->addPort(mips1.ctrl->RegDst,  "RegDst");
-    ctrlView->addPort(mips1.ctrl->Branch,  "Branch");
+   // ctrlView->addPort(mips1.ctrl->Branch,  "Branch");
     ctrlView->addPort(mips1.ctrl->MemRead, "MemRead");
     ctrlView->addPort(mips1.ctrl->MemWrite,"MemWrite");
     ctrlView->addPort(mips1.ctrl->MemtoReg,"MemtoReg");
@@ -74,7 +74,7 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     aluView->addPort(mips1.alu1->din2, "din2");
     aluView->addPort(mips1.alu1->op, "op");
     aluView->addPort(mips1.alu1->dout, "dout");
-    aluView->addPort(mips1.alu1->zero, "zero");
+   // aluView->addPort(mips1.alu1->zero, "zero");
     addChild(aluView,5+MODSTEPX*3,5);
 
     connect(this,SIGNAL(updateModules()), aluView, SLOT(redrawModule()));

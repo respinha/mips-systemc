@@ -27,7 +27,6 @@ SC_MODULE(alu) {
   sc_in< sc_uint<32> >  din2;        
   sc_in< sc_uint<3> >  op;        
   sc_out< sc_uint<32> > dout;
-  sc_out< bool > zero;
 
   SC_CTOR(alu)
      {      
