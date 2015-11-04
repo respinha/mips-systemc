@@ -23,8 +23,8 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     //resize viewport
     resizeContents(820+5,194+5);
 
-    resize( QSize(1000+10,250+10) ); 
-    setMaximumSize( QSize(1000+10,250+10) ); 
+    resize( QSize(1200+10,250+10) ); 
+    setMaximumSize( QSize(1200+10,250+10) ); 
 
     setIcon(QPixmap("mips.xpm"));
 
@@ -107,10 +107,22 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     hazview->addPort(mips1.hazard_unit->reset_ifid, "rs_ifid");
     hazview->addPort(mips1.hazard_unit->reset_exmem, "rs_exmem");
 
-
     addChild(hazview,5+MODSTEPX*5,5);
     
     connect(this,SIGNAL(updateModules()), hazview, SLOT(redrawModule()));
+
+
+    ModView *ctrl2view =new ModView("ctrl2",viewport());
+    ctrl2view->addPort(mips1.ctrl2->le, "le");
+    ctrl2view->addPort(mips1.ctrl2->gr, "gr");
+    ctrl2view->addPort(mips1.ctrl2->eq, "eq");
+    ctrl2view->addPort(mips1.ctrl2->select, "ctrl2_sel");
+    ctrl2view->addPort(mips1.ctrl2->jbr, "jbr");
+    ctrl2view->addPort(mips1.ctrl2->btaken, "btaken");
+
+    addChild(ctrl2view,5+MODSTEPX*6,5);
+    
+    connect(this,SIGNAL(updateModules()), ctrl2view, SLOT(redrawModule()));
 
     setFocusPolicy(Qt::StrongFocus);
 }

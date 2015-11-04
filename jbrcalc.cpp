@@ -16,5 +16,5 @@ void jbrcalculator::entry()
 	finalVal = concat_v << 2;
 
 	jump_target.write(finalVal);
-	br_target.write(PC4.read() + addr_ext.read());
+	br_target.write((int) PC4.read() + (int) addr_ext.read());
 }

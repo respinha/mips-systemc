@@ -56,6 +56,7 @@ void control::entry()
 	    jbr.write(1);
 	    
 	    break;
+
     case  5: // bne
         ALUSrc.write(0);
 	    RegWrite.write(0);
@@ -66,6 +67,7 @@ void control::entry()
 	    jbr.write(2);
 	    
 	    break;
+	    
     case  6: // blez
         ALUSrc.write(0);
 	    RegWrite.write(0);

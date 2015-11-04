@@ -75,7 +75,7 @@ void mips::buildID1(void)
       rfile->clk(clk);
       rfile->reset(reset);
 
-      rfile->enable(const1);
+      rfile->enable(enable_rfile);
       
 }
 
@@ -361,7 +361,7 @@ void mips::buildArchitecture(void){
       or_reset_exmem->din1(reset);
       or_reset_exmem->din2(reset_haz_exmem);
       or_reset_exmem->dout(reset_exmem);
-
+ 
       buildMEM();
       
       //reg_mem_wb
@@ -381,8 +381,14 @@ void mips::buildArchitecture(void){
       reg_mem_wb->valid_mem(valid_mem);
       reg_mem_wb->valid_wb(valid_wb);
       reg_mem_wb->clk(clk);
-      reg_mem_wb->reset(reset);
+      reg_mem_wb->reset(reset_memwb);
       reg_mem_wb->enable(const1);
+
+      or_reset_memwb = new orgate("or_reset_memwb");
+      or_reset_memwb->din1(reset);
+      or_reset_memwb->din2(reset_haz_memwb);
+      or_reset_memwb->dout(reset_memwb);
+ 
 
       buildWB();
 
@@ -390,9 +396,11 @@ void mips::buildArchitecture(void){
       hazard_unit->rs( rs_id2);
       hazard_unit->rt( rt_id2 );
       hazard_unit->WriteReg_exe(WriteReg_exe);
+      hazard_unit->WriteReg_wb(WriteReg_wb);
       hazard_unit->RegWrite_exe(RegWrite_exe);
       hazard_unit->WriteReg_mem(WriteReg_mem);
       hazard_unit->RegWrite_mem(RegWrite_mem);
+      hazard_unit->RegWrite_wb(RegWrite_wb);
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
       hazard_unit->enable_id1id2(enable_id1id2);
@@ -400,10 +408,12 @@ void mips::buildArchitecture(void){
       hazard_unit->reset_idexe(reset_haz_idexe);
       hazard_unit->reset_ifid(reset_haz_ifid);
       hazard_unit->reset_exmem(reset_haz_exmem);
+      hazard_unit->reset_memwb(reset_haz_memwb);
       hazard_unit->MemRead_exe(MemRead_exe);
       hazard_unit->MemRead_mem(MemRead_mem);
       hazard_unit->BranchTaken(BranchTaken);
-   }
+      hazard_unit->enable_rfile(enable_rfile);
+    }
 
 mips::~mips(void)
 {
@@ -429,6 +439,10 @@ mips::~mips(void)
 
       delete hazard_unit;
       delete or_reset_idexe;
+      delete or_reset_id1id2;
+      delete or_reset_ifid;
+      delete or_reset_exmem;
+      delete or_reset_memwb;
       delete reg_if_id;
       delete reg_id_exe;
       delete reg_id1_id2;

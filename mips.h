@@ -64,7 +64,7 @@ SC_MODULE(mips) {
    mux4< sc_uint<32> > *mPC;      // selects Next PC from PCbrach and PC + 4
    orgate *or_reset_ifid;
    sc_signal < sc_uint<26> > jump, jump_id2;
-
+   sc_signal <bool> enable_rfile;
    //ID
    sc_signal <bool> enable_id1id2;
    decode            *dec1;      // decodes instruction
@@ -137,7 +137,7 @@ SC_MODULE(mips) {
                              regb_exe, // value of regiter rt EXE phase
                              regb_mem; // value of regiter rt MEM phase
                   
-   sc_signal <bool> reset_haz_idexe, reset_haz_ifid, reset_ifid, reset_haz_id1id2, reset_id1id2, reset_idexe, reset_haz_exmem, reset_exmem;
+   sc_signal <bool> reset_haz_idexe, reset_haz_ifid, reset_ifid, reset_haz_id1id2, reset_id1id2, reset_idexe, reset_haz_exmem, reset_exmem, reset_memwb, reset_haz_memwb;
    // control signals
    sc_signal <bool> MemRead, MemWrite, MemtoReg;
    sc_signal <bool> RegWrite, RegDst;
@@ -199,6 +199,7 @@ SC_MODULE(mips) {
    sc_signal < bool > BranchTaken;       // execute branch
    sc_signal < sc_uint<32> > const4;   // contant 4
    sc_signal < bool > const1;          // contant 4
+   orgate *or_reset_memwb;
 
    SC_CTOR(mips) {
        buildArchitecture();
