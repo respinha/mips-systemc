@@ -7,7 +7,7 @@ HEADERS		= mips.h\
 		  regT.h reg_id_exe.h reg_exe_mem.h reg_mem_wb.h\
 		  hazard.h\
 		  mipsaux.h\
-		  jbrcalc.h control_jbr.h concat.h\
+		  jbrcalc.h control_jbr.h \
 		  GUI/MIPSctrl.h\
 		  GUI/MIPSarch.h GUI/MIPSmods.h GUI/modview.h\
 		  GUI/MIPSimemview.h GUI/MIPSregfileview.h GUI/MIPSdmemview.h GUI/MIPSmemview.h\

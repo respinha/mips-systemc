@@ -85,8 +85,8 @@ void mips::buildID2(void) {
       mr = new mux< sc_uint<5> > ("muxRDst");
    
       mr->sel(RegDst);
-      mr->din0(rt);
-      mr->din1(rd);
+      mr->din0(rt_id2);
+      mr->din1(rd_id2);
       mr->dout(WriteReg);
    
       // 16 to 32 bit signed Immediate extension
@@ -251,10 +251,12 @@ void mips::buildArchitecture(void){
 
        //reg_id1 id2
       reg_id1_id2 = new reg_id1_id2_t("reg_id1_id2");
-      reg_id1_id2->rega_id1(rt);
-      reg_id1_id2->rega_id2(rega_id2);
-      reg_id1_id2->regb_id1(rd);
-      reg_id1_id2->regb_id2(regb_id2);
+      reg_id1_id2->rt(rt);
+      reg_id1_id2->rd(rd);
+      reg_id1_id2->rs(rs);
+      reg_id1_id2->rs_id2(rs_id2);
+      reg_id1_id2->rt_id2(rt_id2);
+      reg_id1_id2->rd_id2(rd_id2);
       reg_id1_id2->opcode_id1(opcode);
       reg_id1_id2->funct_id1(funct);
       reg_id1_id2->opcode_id2(opcode_id2);
@@ -273,7 +275,7 @@ void mips::buildArchitecture(void){
 
       reg_id1_id2->clk(clk);
       reg_id1_id2->reset(reset_id1id2);
-      reg_id1_id2->enable(const1);
+      reg_id1_id2->enable(enable_id1id2);
 
       or_reset_id1id2 = new orgate("or_reset_id1id2");
       or_reset_id1id2->din1(reset);
@@ -385,19 +387,21 @@ void mips::buildArchitecture(void){
       buildWB();
 
       hazard_unit = new hazard("hazard_unit");
-      hazard_unit->rs( rs );
-      hazard_unit->rt( rt );
+      hazard_unit->rs( rs_id2);
+      hazard_unit->rt( rt_id2 );
       hazard_unit->WriteReg_exe(WriteReg_exe);
       hazard_unit->RegWrite_exe(RegWrite_exe);
       hazard_unit->WriteReg_mem(WriteReg_mem);
       hazard_unit->RegWrite_mem(RegWrite_mem);
       hazard_unit->enable_pc(enable_pc);
       hazard_unit->enable_ifid(enable_ifid);
+      hazard_unit->enable_id1id2(enable_id1id2);
       hazard_unit->reset_id1id2(reset_haz_id1id2);
       hazard_unit->reset_idexe(reset_haz_idexe);
       hazard_unit->reset_ifid(reset_haz_ifid);
       hazard_unit->reset_exmem(reset_haz_exmem);
-      hazard_unit->MemRead(MemRead);
+      hazard_unit->MemRead_exe(MemRead_exe);
+      hazard_unit->MemRead_mem(MemRead_mem);
       hazard_unit->BranchTaken(BranchTaken);
    }
 
