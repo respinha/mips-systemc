@@ -91,7 +91,8 @@ MIPSmods::MIPSmods( mips &m, QWidget* parent,  const char* name, Qt::WFlags fl )
     ModView *hazview=new ModView("haz",viewport());
     hazview->addPort(mips1.hazard_unit->rs, "rs");
     hazview->addPort(mips1.hazard_unit->rt, "rt");
-    hazview->addPort(mips1.hazard_unit->MemRead, "MemRead");
+    hazview->addPort(mips1.hazard_unit->MemRead_exe, "MemRead_exe");
+    hazview->addPort(mips1.hazard_unit->MemRead_mem, "MemRead_mem");
     hazview->addPort(mips1.hazard_unit->WriteReg_exe, "WrReg_e");
     hazview->addPort(mips1.hazard_unit->WriteReg_mem, "WrReg_m");
     hazview->addPort(mips1.hazard_unit->RegWrite_exe, "RWrite_e");

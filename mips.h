@@ -99,13 +99,13 @@ SC_MODULE(mips) {
    sc_signal < sc_uint<32> > inst;     // current instruction
    sc_signal <bool> enable_pc;
 
-   sc_signal <bool> enable_ifid;
+   sc_signal <bool> enable_ifid, enable_id1id2, enable_rfile;
 
    //ID
    sc_signal < sc_uint<32> > inst_id,  // current instruction ID phase
                              PC4_id1, PC4_id2;
    // instruction fields
-   sc_signal < sc_uint<5> > rs, rt, rd;
+   sc_signal < sc_uint<5> > rs, rt, rd, rs_id2, rt_id2, rd_id2;
    sc_signal < sc_uint<16> > imm;
    sc_signal < sc_uint<6> > opcode, opcode_id2;
    sc_signal < sc_uint<5> > shamt;
@@ -187,6 +187,9 @@ SC_MODULE(mips) {
    sc_signal < bool > BranchTaken;       // execute branch
    sc_signal < sc_uint<32> > const4;   // contant 4
    sc_signal < bool > const1;          // contant 4
+
+   orgate *or_reset_memwb;
+   sc_signal <bool> reset_haz_memwb, reset_memwb;
 
    SC_CTOR(mips) {
        buildArchitecture();
