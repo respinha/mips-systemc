@@ -1,8 +1,9 @@
+
 ***************************************************************************
 *  MIPS_SystemC                                                           *
 *  MIPS Model in SystemC with a Graphical User Interface                  *
 *  Arquitectura de Computadores Avançada                                  * 
-*  Universidade de Aveiro - 2014                                          *
+*  Universidade de Aveiro - 2015                                          *
 ***************************************************************************
 
 ### Information
@@ -71,5 +72,4 @@
      Qt
          http://qt-project.org/
 
-Copyright (c) 2014  - Universidade de Aveiro
-
+Copyright (c) 2015  - Universidade de Aveiro
